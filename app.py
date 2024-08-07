@@ -106,7 +106,11 @@ except ValueError as e:
 # Sales Analysis
 try:
     st.write('Total Daily Sales') # gives the graph a title
-    daily_sales = df.groupby('date')['sales'].sum()
+    if len(filtered_table) > 0:
+        daily_sales = filtered_table.groupby('date')['sales'].sum()
+    else:
+        daily_sales = df.groupby('date')['sales'].sum()
+
     daily_sales_df = daily_sales.reset_index().rename(columns={'sales': 'total sales'})
    #ax = daily_sales_df.plot.area(x = 'date',
    #                             y = 'total sales')
@@ -121,7 +125,10 @@ except ValueError as e:
 # Quantity Analysis
 try:
     st.write('Total Daily Quantity') # gives the graph a title
-    daily_qty_sold = df.groupby('date')['quantity'].sum() # calculate total daily quantity sold
+    if len(filtered_table) > 0:
+        daily_qty_sold = filtered_table.groupby('date')['quantity'].sum() # calculate total daily quantity sold
+    else:
+        daily_qty_sold = df.groupby('date')['quantity'].sum() # calculate total daily quantity sold
     daily_qty_sold_df = daily_qty_sold.reset_index().rename(columns={'quantity':'total qty'}) # Create a table
     my_plot2 = st.line_chart(daily_qty_sold_df,
                      x = 'date',
